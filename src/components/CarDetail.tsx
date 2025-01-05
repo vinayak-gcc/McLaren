@@ -15,10 +15,8 @@ export default function CarDetail() {
    const [product] = carsData.filter((car) => car.id === parseInt(id ?? ""));
    const dispatch = useDispatch();
 
-   // Select cart items from Redux store
    const cart = useSelector((state: any) => state.car.cart);
 
-   // Function to check if product is already in the cart
    const isProductInCart = (productId: number) =>
       cart.some((item: any) => item.id === productId);
 

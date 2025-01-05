@@ -29,7 +29,7 @@ function Section(props: SectionInterface) {
          <Fade direction="up">
             <ItemSet>
                <h1 className="text-4xl font-bold text-black">{props.title}</h1>
-               <p className="font-lg">{props.heading}</p>
+               <p className="font-lg text-black font-medium">{props.heading}</p>
             </ItemSet>
          </Fade>
          <Buttons>

@@ -44,7 +44,7 @@ function Navbar(props: NavbarInterface) {
                   }}
                   key={car.id}
                >
-                 <p className="text-lg font-semibold"> {car.title} </p>
+                 <p className="text-lg text-black font-bold"> {car.title} </p>
                </h1>
             ))}
          </Menu>
