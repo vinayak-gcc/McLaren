@@ -95,7 +95,7 @@ export default function Example() {
                                     </div>
                                     <div className="flex-1 ml-6 text-sm">
                                        <div className="font-medium text-gray-900 sm:flex sm:justify-between">
-                                          <h5>{product.title}</h5>
+                                          <h5 className='font-bold'>{product.title}</h5>
                                           <p className="mt-2 sm:mt-0">
                                              $
                                              {new Intl.NumberFormat(

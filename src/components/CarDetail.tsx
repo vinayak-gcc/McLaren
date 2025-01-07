@@ -17,7 +17,6 @@ export default function CarDetail() {
    const dispatch = useDispatch();
    const navigation = useNavigate();
    
-
    const cart = useSelector((state: any) => state.car.cart);
 
    const isProductInCart = (productId: number) =>
@@ -27,10 +26,12 @@ export default function CarDetail() {
 
    return (
       <div className="bg-white">
+
+         <div className="flex flex-col">
          <div className="mx-auto mt-20 mb-8 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
 
             {/* Product */}
-            <div className="lg:grid lg:grid-rows-1 lg:grid-cols-7 lg:gap-x-8 lg:gap-y-10 xl:gap-x-16">
+            <div className="lg:grid lg:grid-rows-1 lg:grid-cols-7 lg:gap-x-8 xl:gap-x-16">
                
                {/* Product image */}
                <div className="lg:row-end-1 lg:col-span-4">
@@ -151,12 +152,12 @@ export default function CarDetail() {
                   </div>
 
 
-
-                  <div className="border-t border-gray-200 mt-5 pt-5">
+                  {/* Highlights except lg */}
+                  <div className="border-t border-gray-200 mt-5 pt-5 lg:hidden">
                      <h3 className="text-gray-900 font-bold text-lg">
                         Highlights
                      </h3>
-                     <div className="mt-4 prose prose-sm text-gray-500">
+                     <div className="mt-4 prose prose-md text-gray-500">
                         <ul>
                            {product.highlights.map((highlight) => (
                               <li key={highlight}>{highlight}</li>
@@ -166,7 +167,25 @@ export default function CarDetail() {
                   </div>
                </div>
             </div>
+
          </div>
+         
+      {/* Highlights for lg */}
+         <div className="ml-8 mb-4 hidden lg:block">
+            <h3 className="text-gray-900 font-bold text-lg ">
+               Highlights
+            </h3>
+               <div className="prose prose-lead: text-gray-500">
+                  <ul>
+                           {product.highlights.map((highlight) => (
+                              <li key={highlight}>{highlight}</li>
+                           ))}
+                  </ul>
+               </div>
+        </div>
+
+         </div>
+
       </div>
    );
 }

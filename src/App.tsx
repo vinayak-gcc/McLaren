@@ -45,7 +45,7 @@ function App() {
          <Route path="/cars/:id" element={<CarDisplay />} />
          <Route path="/login" element={<Login />} />
          <Route path="/register" element={<Register />} />
-         <Route path="/orderpage" element={<Order />} />
+         <Route path="/order" element={<Order />} />
          <Route path="/checkout" element={<Checkout/>} />
       </Routes>
    );

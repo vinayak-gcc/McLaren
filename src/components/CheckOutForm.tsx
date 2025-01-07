@@ -1,15 +1,32 @@
-import React from 'react';
-import { useNavigate } from "react-router-dom";
+import React, {useRef} from 'react';
 import { useAppSelector } from "../app/store";
-
+import { useNavigate } from "react-router-dom";
+import emailjs from 'emailjs-com';
 
 const CheckOutForm = () => {
 
-    const navigation = useNavigate();
     const total = useAppSelector((state) => state.car.total);
-    
-  return (
-    <>
+    const navigation = useNavigate();
+
+   //  E-Mail.js Form
+    const form = useRef<HTMLFormElement>(null);
+
+    const sendEmail = (e:any) => {
+        e.preventDefault(); 
+
+      // Service_id ,Tempate_id ,PublicKey
+        emailjs.sendForm('service_yatg313', 'template_cnie7yy', form.current!, 'M84GYwg-YCpBV47Od')
+            .then(() => {
+                console.log('Email sent successfully:');
+            }, (error) => {
+                console.log('Error Sending Email:', error.text);
+            });
+
+        e.target.reset(); 
+    };
+
+    return (
+       <>
       
             {/* Checkout form */}
             <section
@@ -18,7 +35,9 @@ const CheckOutForm = () => {
             >
 
                <div className="max-w-lg pt-4 md:pt-2 mx-auto lg:pt-12  ">
-                  <form className="mt-6">
+
+                  <form className="mt-6"  ref={form} onSubmit={sendEmail} >
+
                      <div className="grid grid-cols-12 gap-y-6 gap-x-4">
                         <div className="col-span-full mt-4">
                            <label
@@ -50,7 +69,7 @@ const CheckOutForm = () => {
                                  type="text"
                                  id="name-on-card"
                                  name="name-on-card"
-                                 autoComplete="cc-name"
+                                 autoComplete="Name"
                                  className="appearance-none block w-full px-3 py-2  rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                               />
                            </div>
@@ -150,7 +169,7 @@ const CheckOutForm = () => {
 
                         <div className="col-span-full sm:col-span-4">
                            <label
-                              htmlFor="regino"
+                              htmlFor="region"
                               className="block text-sm font-medium text-gray-700"
                            >
                               State / Province
@@ -158,8 +177,8 @@ const CheckOutForm = () => {
                            <div className="mt-1">
                               <input
                                  type="text"
-                                 id="regino"
-                                 name="regino"
+                                 id="region"
+                                 name="region"
                                  autoComplete="address-level1"
                                  className="appearance-none block w-full px-3 py-2  rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                               />
@@ -204,10 +223,14 @@ const CheckOutForm = () => {
                      </div>
 
                      <button
-                        onClick={() => navigation("/orderpage" , {replace:true}) }
                         type="submit"
                         className="w-full mt-6 bg-indigo-600 border border-transparent rounded-md shadow-sm py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                     >
+                        onClick={() => {
+                           setTimeout(()=> {
+                           navigation('/order', {replace:true} );
+                           }, 2000);
+                         }}
+                        >
                         Pay ${new Intl.NumberFormat("en-IN").format(total)}
                      </button>
                   </form>
