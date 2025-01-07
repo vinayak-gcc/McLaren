@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import { Fade } from "react-awesome-reveal";
-import { selectCars, setCarRef } from "../features/Car/carSlice";
+import { setCarRef } from "../features/Car/carSlice";
 import { Link } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../app/store";
+import { useAppDispatch } from "../app/store";
 
 interface SectionInterface {
    id: number;
@@ -16,7 +16,6 @@ interface SectionInterface {
 function Section(props: SectionInterface) {
    let myRef = useRef<HTMLDivElement>(null);
    const dispatch = useAppDispatch();
-   const cars = useAppSelector(selectCars);
 
    useEffect(() => {
       if (myRef.current) {
@@ -47,21 +46,7 @@ function Section(props: SectionInterface) {
                   </Link>
                </ButtonGroup>
             </Fade>
-            {props.id !== cars.length && (
 
-               <DownArrow
-                  onClick={() =>
-                     props.homeRef?.current?.scrollTo({
-                        behavior: "smooth",
-                        top: cars[props.id].ref.offsetTop,
-                     })
-                  }
-                  className="mx-auto cursor-pointer"
-                  src="images/down-arrow.svg"
-                  alt="DownArrow"
-               ></DownArrow>
-
-            )}
          </Buttons>
       </Wrap>
    );
@@ -118,11 +103,6 @@ const RightButton = styled(LeftButton)`
    color: black;
 `;
 
-const DownArrow = styled.img`
-   margin-top: 20px;
-   height: 40px;
-   animation: animateDown infinite 1.5s;
-   overflow-x: hidden;
-`;
+
 
 const Buttons = styled.div``;

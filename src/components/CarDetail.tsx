@@ -5,6 +5,7 @@ import { carsData } from "../carsData";
 import { CheckIcon, ClockIcon } from "@heroicons/react/solid";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../features/Car/carSlice";
+import { useNavigate } from "react-router-dom";
 
 function classNames(...classes: string[]) {
    return classes.filter(Boolean).join(" ");
@@ -14,6 +15,8 @@ export default function CarDetail() {
    const { id } = useParams();
    const [product] = carsData.filter((car) => car.id === parseInt(id ?? ""));
    const dispatch = useDispatch();
+   const navigation = useNavigate();
+   
 
    const cart = useSelector((state: any) => state.car.cart);
 
@@ -42,7 +45,12 @@ export default function CarDetail() {
 
                {/* Product details */}
                <div className="max-w-2xl mx-auto mt-14 sm:mt-16 lg:max-w-none lg:mt-0 lg:row-end-2 lg:row-span-2 lg:col-span-3">
-                  <div className="flex flex-col-reverse">
+                  
+                  <div className="flex justify-between">
+
+                  {/* Title and Rating */}
+                  <div>
+                  <div className="flex flex-col">
                      <div className="mt-4">
                         <h1 className="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">
                            {product.title}
@@ -50,6 +58,7 @@ export default function CarDetail() {
                      </div>
                   </div>
 
+               {/* Product Ratings */}
                   <div>
                      <div className="flex items-center">
                         {[0, 1, 2, 3, 4].map((rating) => (
@@ -68,13 +77,30 @@ export default function CarDetail() {
                      <p className="sr-only">{3} out of 5 stars</p>
                   </div>
 
+                  </div>
+                  
+                  {/* Home Button */}
+                  <div>
+                  <button
+                         className="w-fit mt-3 bg-indigo-600 hover:bg-indigo-700 border border-transparent rounded-md py-3 px-4 flex items-center 
+                         justify-center text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50
+                          focus:ring-indigo-500"
+                          onClick={() => navigation("/")}
+
+                        >
+                        Home
+                        </button>
+                  </div>
+
+                  </div>
+
                   <p className="text-gray-500 mt-6">{product.description}</p>
 
                   <div className="flex flex-col sm:flex-row">
                      <div className="flex flex-col">
                         <p className="mt-4 font-bold text-lg">
                            Price- $
-                           {new Intl.NumberFormat("en-GB").format(product.price)}
+                           {new Intl.NumberFormat("en-IN").format(product.price)}
                         </p>
                         <div className="flex gap-2 items-center mt-2">
                            {product.inStock ? (
@@ -92,7 +118,8 @@ export default function CarDetail() {
                         </div>
                      </div>
 
-                     <div className="my-5 flex-wrap sm:ml-10 flex flex-col  gap-x-6 gap-y-4 sm:flex-row">
+                     <div className="w-fit my-5 flex sm:ml-8 flex flex-col gap-y-4 sm:flex-row">
+
                         <button
                            disabled={isInCart}
                            onClick={() => {
@@ -100,16 +127,30 @@ export default function CarDetail() {
                            }}
                            type="button"
                            className={classNames(
-                              "w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500",
+                              "bg-indigo-600 border border-transparent rounded-md py-3 px-4 flex items-center justify-center text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500",
                               isInCart
                                  ? "opacity-50 cursor-not-allowed"
                                  : "hover:bg-indigo-700"
                            )}
                         >
                            {isInCart ? "Already in Cart" : "Add to Cart"}
+
                         </button>
+                        
+                        {/* Go to Cart Button */}
+                        <button
+                         className="ml-0 sm:ml-4 bg-indigo-600 hover:bg-indigo-700 border border-transparent rounded-md py-3 px-4 flex items-center 
+                         justify-center text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50
+                          focus:ring-indigo-500"
+                          onClick={() => navigation("/cart")}
+                        >
+                        Go to Cart
+                        </button>
+                        
                      </div>
                   </div>
+
+
 
                   <div className="border-t border-gray-200 mt-5 pt-5">
                      <h3 className="text-gray-900 font-bold text-lg">

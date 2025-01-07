@@ -14,10 +14,10 @@ const CheckOutForm = () => {
             {/* Checkout form */}
             <section
                aria-labelledby="payment-heading"
-               className="flex-auto overflow-y-auto px-4 bg-gray-100 pb-16 sm:px-6 lg:px-8 lg:pt-0 lg:pb-24"
+               className="flex-auto overflow-y-auto px-4 bg-gray-100 pb-10 sm:px-6 lg:px-8 lg:pt-0 lg:pb-10"
             >
 
-               <div className="max-w-lg pt-6 mx-auto lg:pt-12  ">
+               <div className="max-w-lg pt-4 md:pt-2 mx-auto lg:pt-12  ">
                   <form className="mt-6">
                      <div className="grid grid-cols-12 gap-y-6 gap-x-4">
                         <div className="col-span-full mt-4">
@@ -204,11 +204,11 @@ const CheckOutForm = () => {
                      </div>
 
                      <button
-                        onClick={() => navigation("/orderpage")}
+                        onClick={() => navigation("/orderpage" , {replace:true}) }
                         type="submit"
                         className="w-full mt-6 bg-indigo-600 border border-transparent rounded-md shadow-sm py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                      >
-                        Pay ${new Intl.NumberFormat("en-GB").format(total)}
+                        Pay ${new Intl.NumberFormat("en-IN").format(total)}
                      </button>
                   </form>
                </div>

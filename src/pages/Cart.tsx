@@ -179,7 +179,7 @@ export default function CartPage() {
                                           <p className="mt-1 text-sm font-medium text-gray-900">
                                              $
                                              {new Intl.NumberFormat(
-                                                "en-GB"
+                                                "en-IN"
                                              ).format(product.price)}
                                           </p>
                                        </div>

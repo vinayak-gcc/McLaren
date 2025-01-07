@@ -58,7 +58,7 @@ const MobileOrderSummary = () => {
                                           <p className="text-gray-900">
                                              Price- $
                                              {new Intl.NumberFormat(
-                                                "en-GB"
+                                                "en-IN"
                                              ).format(product.price)}
                                           </p>
                                           <p className="text-gray-500">
@@ -81,7 +81,7 @@ const MobileOrderSummary = () => {
                         <p className="flex items-center justify-between text-sm font-medium text-gray-900 mt-4 lg:mt-0 border-gray-200 ">
                            <span className="text-base ">Total</span>
                            <span className="text-base font-bold">
-                              ${new Intl.NumberFormat("en-GB").format(total)}
+                              ${new Intl.NumberFormat("en-IN").format(total)}
                            </span>
                         </p>
                      </>

@@ -48,7 +48,7 @@ const OrderSummary = () => {
                          <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                             <dt className="text-sm text-gray-600">Subtotal</dt>
                             <dd className="text-sm font-medium text-gray-900">
-                               ${new Intl.NumberFormat("en-GB").format(subtotal)}
+                               ${new Intl.NumberFormat("en-IN").format(subtotal)}
                             </dd>
                          </div>
 
@@ -57,7 +57,7 @@ const OrderSummary = () => {
                             <dd className="text-sm font-medium text-gray-900">
                                $
                                {subtotal !== 0
-                                  ? new Intl.NumberFormat("en-GB").format(shipEsti)
+                                  ? new Intl.NumberFormat("en-IN").format(shipEsti)
                                   : 0}
                             </dd>
                          </div>
@@ -69,7 +69,7 @@ const OrderSummary = () => {
                             <dd className="text-sm font-medium text-gray-900">
                                $
                                {subtotal !== 0
-                                  ? new Intl.NumberFormat("en-GB").format(tax)
+                                  ? new Intl.NumberFormat("en-IN").format(tax)
                                   : 0}
                             </dd>
                          </div>
@@ -81,7 +81,7 @@ const OrderSummary = () => {
                             <dd className="text-base font-medium text-gray-900">
                                $
                                {subtotal !== 0
-                                  ? new Intl.NumberFormat("en-GB").format(total)
+                                  ? new Intl.NumberFormat("en-IN").format(total)
                                   : 0}
                             </dd>
                          </div>

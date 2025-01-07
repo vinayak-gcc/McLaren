@@ -25,7 +25,7 @@ export default function CheckoutPage() {
                className="hidden bg-gray-50 w-full max-w-md flex-col lg:flex mt-16"
             >
                <ul
-                  className="flex-auto overflow-y-auto divide-y divide-gray-200 px-6"
+                  className="overflow-y-auto divide-y divide-gray-200 px-6"
                >
                  {products.map((product) => (
                      <li key={product.id} className="flex py-6 space-x-6">
@@ -40,7 +40,7 @@ export default function CheckoutPage() {
                               <p className="text-gray-900">
                                  {" "}
                                  Price- $
-                                 {new Intl.NumberFormat("en-GB").format(
+                                 {new Intl.NumberFormat("en-IN").format(
                                     product.price
                                  )}
                               </p>
@@ -55,12 +55,12 @@ export default function CheckoutPage() {
                   ))}
                </ul>
 
-               <div className="sticky bottom-0 flex-none bg-gray-50 border-t border-gray-200 p-6">
+               <div className="bg-gray-50 border-solid border-t border-b border-gray-200 p-5">
                      <div className="flex items-center justify-between text-gray-900 pt-2">
                         <dt>Total</dt>
                         <dd className="text-base font-bold">
                            {" "}
-                           ${new Intl.NumberFormat("en-GB").format(total)}
+                           ${new Intl.NumberFormat("en-IN").format(total)}
                         </dd>
                      </div>
                </div>
