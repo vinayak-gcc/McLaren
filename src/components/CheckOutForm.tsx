@@ -7,19 +7,14 @@ const CheckOutForm = () => {
 
     const total = useAppSelector((state) => state.car.total);
     const navigation = useNavigate();
-    const [isDisabled, setIsDisabled] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
    
     const triggerAlert = () => {
       setShowAlert(true); 
       setTimeout(() => {
         setShowAlert(false); 
-      }, 1300);
+      }, 1800);
     };
-
-    function classNames(...classes: string[]) {
-      return classes.filter(Boolean).join(" ");
-   }
 
    //  E-Mail.js Form
     const form = useRef<HTMLFormElement>(null);
@@ -39,14 +34,13 @@ const CheckOutForm = () => {
     };
 
     return (
-       <>   
-            {/* Show Alert Box after clicking pay button */}
+       <>
             {showAlert && (
               <div>
                  <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                  <div className="bg-white rounded-lg shadow-lg p-6 max-w-sm  w-fit sm:w-full text-center">
+                  <div className="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full text-center">
                   <h2 className="text-lg font-semibold mb-4"> 🥳Congratulations🥳</h2>
-                  <p className="text-gray-700 mb-6">Redirecting you to Order Page</p>
+                  <p className="text-gray-700 mb-6">Redirecting you soon to Order Page .</p>
                  </div>
                </div>
             </div>
@@ -78,7 +72,8 @@ const CheckOutForm = () => {
                                  id="email-address"
                                  name="email-address"
                                  autoComplete="email"
-                                 className="appearance-none block w-full px-3 py-2  rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                 className="appearance-none block w-full px-3 py-2  rounded-md shadow-sm placeholder-gray-400 focus:outline-none
+                                  focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                               />
                            </div>
                         </div>
@@ -96,7 +91,8 @@ const CheckOutForm = () => {
                                  id="name-on-card"
                                  name="name-on-card"
                                  autoComplete="Name"
-                                 className="appearance-none block w-full px-3 py-2  rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                 className="appearance-none block w-full px-3 py-2  rounded-md shadow-sm placeholder-gray-400 focus:outline-none
+                                  focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                               />
                            </div>
                         </div>
@@ -114,7 +110,8 @@ const CheckOutForm = () => {
                                  id="card-number"
                                  name="card-number"
                                  autoComplete="cc-number"
-                                 className="appearance-none block w-full px-3 py-2  rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                 className="appearance-none block w-full px-3 py-2  rounded-md shadow-sm placeholder-gray-400 focus:outline-none
+                                  focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                               />
                            </div>
                         </div>
@@ -132,7 +129,8 @@ const CheckOutForm = () => {
                                  name="expiration-date"
                                  id="expiration-date"
                                  autoComplete="cc-exp"
-                                 className="appearance-none block w-full px-3 py-2  rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                 className="appearance-none block w-full px-3 py-2  rounded-md shadow-sm placeholder-gray-400 focus:outline-none
+                                  focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                               />
                            </div>
                         </div>
@@ -170,7 +168,8 @@ const CheckOutForm = () => {
                                  id="address"
                                  name="address"
                                  autoComplete="street-address"
-                                 className="appearance-none block w-full px-3 py-2  rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                 className="appearance-none block w-full px-3 py-2  rounded-md shadow-sm placeholder-gray-400 focus:outline-none
+                                  focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                               />
                            </div>
                         </div>
@@ -188,7 +187,8 @@ const CheckOutForm = () => {
                                  id="city"
                                  name="city"
                                  autoComplete="address-level2"
-                                 className="appearance-none block w-full px-3 py-2  rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                 className="appearance-none block w-full px-3 py-2  rounded-md shadow-sm placeholder-gray-400 focus:outline-none
+                                  focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                               />
                            </div>
                         </div>
@@ -206,7 +206,8 @@ const CheckOutForm = () => {
                                  id="region"
                                  name="region"
                                  autoComplete="address-level1"
-                                 className="appearance-none block w-full px-3 py-2  rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                 className="appearance-none block w-full px-3 py-2  rounded-md shadow-sm placeholder-gray-400 focus:outline-none
+                                  focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                               />
                            </div>
                         </div>
@@ -224,7 +225,8 @@ const CheckOutForm = () => {
                                  id="postal-code"
                                  name="postal-code"
                                  autoComplete="postal-code"
-                                 className="appearance-none block w-full px-3 py-2  rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                 className="appearance-none block w-full px-3 py-2  rounded-md shadow-sm placeholder-gray-400 focus:outline-none
+                                  focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                               />
                            </div>
                         </div>
@@ -254,36 +256,26 @@ const CheckOutForm = () => {
                      <button
                      
                         type="submit"
-                        disabled={isDisabled}
                         
                         onClick={() => {
-                           setTimeout(()=> {
+                        setTimeout(()=> {
                            navigation('/order', {replace:true} );
-                           }, 2000);
-
-                           setIsDisabled(true)
+                        }, 2000);
                            
-                           setTimeout(()=> {
-                              triggerAlert()
-                              }, 500);
-
-                         }}
-
+                        // Alert Trigger
+                        setTimeout(()=> {
+                           triggerAlert()
+                        }, 100);
+                           
+                        }}
                          
-                        className={classNames(
-                           " w-full mt-6 bg-indigo-600 border border-transparent rounded-md shadow-sm py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500",
-                           isDisabled
-                              ? "opacity-50 cursor-not-allowed"
-                              : "hover:bg-indigo-700"
-
-                        )}
+                        className="w-full mt-6 bg-indigo-600 border border-transparent rounded-md shadow-sm py-2 px-4 text-sm font-medium
+                         text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
-
-                        {
-                           isDisabled ? (<p className='text-white'>Thanks for Ordering</p>)
-                        :
-                           (<p className='text-white'>Pay ${new Intl.NumberFormat("en-IN").format(total)}</p>)
-                        }
+                        
+                        <p className='text-white' id='Pay-Text' >
+                        Pay ${new Intl.NumberFormat("en-IN").format(total)}
+                        </p>
 
                      </button>
                      
