@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import styled from "styled-components";
 import { selectCars } from "../features/Car/carSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,8 +24,26 @@ function Navbar(props: NavbarInterface) {
    const dispatch = useDispatch();
    const cartData = useCartState();
 
+   const [opacity, setOpacity] = useState(1);
+
+
+   // Introduce Navbar Opacity on Scroll
+   useEffect(() => {
+     const handleScroll = () => {
+       const scrollPosition = window.scrollY;
+       const newOpacity = Math.max(0, 1 - scrollPosition / 600); 
+       setOpacity(newOpacity);
+     };
+ 
+     window.addEventListener('scroll', handleScroll);
+ 
+     return () => {
+       window.removeEventListener('scroll', handleScroll);
+     };
+   }, []);
+
    return (
-      <Container className={bgColor ? bgColor : ""}>
+      <Container className={bgColor ? bgColor : ""} style={{ opacity }}>
          <Link to="/">
             <img src="/images/McLarenlogo.svg" height={120} width={120} alt="logo" className="" />
          </Link>

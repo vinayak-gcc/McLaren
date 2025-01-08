@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef , useState} from 'react';
 import { useAppSelector } from "../app/store";
 import { useNavigate } from "react-router-dom";
 import emailjs from 'emailjs-com';
@@ -7,6 +7,19 @@ const CheckOutForm = () => {
 
     const total = useAppSelector((state) => state.car.total);
     const navigation = useNavigate();
+    const [isDisabled, setIsDisabled] = useState(false);
+    const [showAlert, setShowAlert] = useState(false);
+   
+    const triggerAlert = () => {
+      setShowAlert(true); 
+      setTimeout(() => {
+        setShowAlert(false); 
+      }, 1300);
+    };
+
+    function classNames(...classes: string[]) {
+      return classes.filter(Boolean).join(" ");
+   }
 
    //  E-Mail.js Form
     const form = useRef<HTMLFormElement>(null);
@@ -26,8 +39,20 @@ const CheckOutForm = () => {
     };
 
     return (
-       <>
-      
+       <>   
+            {/* Show Alert Box after clicking pay button */}
+            {showAlert && (
+              <div>
+                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                  <div className="bg-white rounded-lg shadow-lg p-6 max-w-sm  w-fit sm:w-full text-center">
+                  <h2 className="text-lg font-semibold mb-4"> 🥳Congratulations🥳</h2>
+                  <p className="text-gray-700 mb-6">Redirecting you to Order Page</p>
+                 </div>
+               </div>
+            </div>
+            )}
+
+
             {/* Checkout form */}
             <section
                aria-labelledby="payment-heading"
@@ -38,6 +63,7 @@ const CheckOutForm = () => {
 
                   <form className="mt-6"  ref={form} onSubmit={sendEmail} >
 
+                     {/* Actual Form */}
                      <div className="grid grid-cols-12 gap-y-6 gap-x-4">
                         <div className="col-span-full mt-4">
                            <label
@@ -221,18 +247,46 @@ const CheckOutForm = () => {
                            Billing address is the same as shipping address
                         </label>
                      </div>
+                     {/* Actual Form */}
 
+
+                     {/* Pay Button */}
                      <button
+                     
                         type="submit"
-                        className="w-full mt-6 bg-indigo-600 border border-transparent rounded-md shadow-sm py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        disabled={isDisabled}
+                        
                         onClick={() => {
                            setTimeout(()=> {
                            navigation('/order', {replace:true} );
                            }, 2000);
+
+                           setIsDisabled(true)
+                           
+                           setTimeout(()=> {
+                              triggerAlert()
+                              }, 500);
+
                          }}
+
+                         
+                        className={classNames(
+                           " w-full mt-6 bg-indigo-600 border border-transparent rounded-md shadow-sm py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500",
+                           isDisabled
+                              ? "opacity-50 cursor-not-allowed"
+                              : "hover:bg-indigo-700"
+
+                        )}
                         >
-                        Pay ${new Intl.NumberFormat("en-IN").format(total)}
+
+                        {
+                           isDisabled ? (<p className='text-white'>Thanks for Ordering</p>)
+                        :
+                           (<p className='text-white'>Pay ${new Intl.NumberFormat("en-IN").format(total)}</p>)
+                        }
+
                      </button>
+                     
                   </form>
                </div>
             </section>

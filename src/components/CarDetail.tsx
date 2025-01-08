@@ -120,7 +120,8 @@ export default function CarDetail() {
                      </div>
 
                      <div className="w-fit my-5 flex sm:ml-8 flex flex-col gap-y-4 sm:flex-row">
-
+                        
+                        {product.inStock ? (
                         <button
                            disabled={isInCart}
                            onClick={() => {
@@ -135,8 +136,23 @@ export default function CarDetail() {
                            )}
                         >
                            {isInCart ? "Already in Cart" : "Add to Cart"}
-
                         </button>
+                        )
+                        :
+                        (
+                        <div>
+                           <button
+                           className="bg-indigo-600 border border-transparent rounded-md py-3 px-4 flex items-center justify-center text-base font-medium
+                            text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500
+                             opacity-50 cursor-not-allowed"
+                           type="button"
+                           >
+                              Out of Stock
+                           </button>
+                        </div>
+                        )
+                        }  
+
                         
                         {/* Go to Cart Button */}
                         <button

@@ -17,9 +17,9 @@ export default function Example() {
          {/* Show Confetti */}
          <ShowConfetti />
 
-      
+         <Navbar bgColor={"bg-white border-b"}></Navbar>
+
          <div className="pt-16 sm:pt-16 sm:pb-12 md:pt-24">
-            <Navbar bgColor={"bg-white border-b"}></Navbar>
             <div className="max-w-7xl mx-auto sm:px-2 lg:px-8">
                <div className="max-w-2xl mx-auto px-4 lg:max-w-4xl lg:px-0">
                   <div className='flex justify-between'>
