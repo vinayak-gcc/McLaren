@@ -18,6 +18,8 @@
     "eslint-config-react-app": "^7.0.1",
     "firebase": "^9.23.0",
     "flatted": "^3.3.2",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.2",
     "react": "^17.0.2",
     "react-awesome-reveal": "^3.8.1",
     "react-confetti": "^6.0.1",

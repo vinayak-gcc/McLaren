@@ -9,6 +9,7 @@
 - EmailJS Integration for Email Confirmation
 - Dynamic Order Summary using Cart Data
 - Firebase for Login and Registration
+- Download ScreenShot as PDF after Order
 - Few small features here and there among the whole website
 - Overall Smooth experience
 

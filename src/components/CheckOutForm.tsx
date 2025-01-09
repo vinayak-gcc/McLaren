@@ -13,8 +13,9 @@ const CheckOutForm = () => {
       setShowAlert(true); 
       setTimeout(() => {
         setShowAlert(false); 
-      }, 1800);
+      }, 1600);
     };
+
 
    //  E-Mail.js Form
     const form = useRef<HTMLFormElement>(null);
@@ -265,16 +266,21 @@ const CheckOutForm = () => {
                         // Alert Trigger
                         setTimeout(()=> {
                            triggerAlert()
-                        }, 100);
+                        }, 300);
+
                            
                         }}
                          
                         className="w-full mt-6 bg-indigo-600 border border-transparent rounded-md shadow-sm py-2 px-4 text-sm font-medium
-                         text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                         text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 group "
                         >
                         
-                        <p className='text-white' id='Pay-Text' >
+                        <p className='text-white visible group-focus-within:invisible' id='Pay-Text' >
                         Pay ${new Intl.NumberFormat("en-IN").format(total)}
+                        </p>
+
+                        <p className='text-white place-self-center invisible group-focus-within:visible -mt-5  '>
+                           Thanks Man
                         </p>
 
                      </button>
