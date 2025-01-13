@@ -4,8 +4,7 @@ import { selectCars } from "../features/Car/carSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { MenuIcon, XIcon } from "@heroicons/react/solid";
 import { Link, useNavigate } from "react-router-dom";
-import { useCartState } from "../hooks/useReducerState";
-import { useAppSelector } from "../app/store";
+import { useAppSelector , useCartState } from "../app/store";
 import { FaOpencart } from "react-icons/fa";
 import { setLogout } from "../features/User/userSlice";
 

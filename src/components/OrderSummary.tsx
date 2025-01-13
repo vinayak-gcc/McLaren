@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import {  setTotal } from "../features/Car/carSlice";
-import { useCartState } from "../hooks/useReducerState";
+import { useCartState } from "../app/store";
 
 const OrderSummary = () => {
 

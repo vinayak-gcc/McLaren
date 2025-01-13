@@ -1,6 +1,5 @@
 import React ,{useRef} from 'react';
-import { useCartState } from "../hooks/useReducerState";
-import { useAppSelector } from "../app/store";
+import { useAppSelector , useCartState } from "../app/store";
 import Navbar from "../components/Navbar";
 import ShowConfetti from '../components/ShowConfetti';
 import { useNavigate } from "react-router-dom";

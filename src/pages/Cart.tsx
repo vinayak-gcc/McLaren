@@ -11,7 +11,7 @@ import {
    removeFromCart,
    setQuantity,
 } from "../features/Car/carSlice";
-import { useCartState } from "../hooks/useReducerState";
+import { useCartState } from "../app/store";
 import { ImSad } from "react-icons/im";
 import Navbar from "../components/Navbar";
 import OrderSummary from "../components/OrderSummary";

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Disclosure } from "@headlessui/react";
 import { useAppSelector } from "../app/store";
-import { useCartState } from "../hooks/useReducerState";
+import { useCartState } from "../app/store";
 
 const MobileOrderSummary = () => {
 

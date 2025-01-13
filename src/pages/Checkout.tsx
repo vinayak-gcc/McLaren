@@ -1,7 +1,6 @@
-import { useCartState } from "../hooks/useReducerState";
 import React from "react";
 import Navbar from "../components/Navbar";
-import { useAppSelector } from "../app/store";
+import { useAppSelector , useCartState} from "../app/store";
 import CheckOutForm from "../components/CheckOutForm";
 import MobileOrderSummary from "../components/MobileOrderSummary";
 

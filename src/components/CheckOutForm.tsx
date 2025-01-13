@@ -280,7 +280,7 @@ const CheckOutForm = () => {
                         </p>
 
                         <p className='text-white place-self-center invisible group-focus-within:visible -mt-5  '>
-                           Thanks Man
+                           Thanks Bhai
                         </p>
 
                      </button>
