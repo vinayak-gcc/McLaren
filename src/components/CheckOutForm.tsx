@@ -265,6 +265,25 @@ const StripePaymentForm: React.FC<StripePaymentFormProps> = ({
           />
         </div>
 
+        {/* Info */}
+        <p>
+    Stripe provides predefined test card numbers to simulate various payment scenarios during development. These cards are only valid in test mode and do not process real payments. Below is a summary of commonly used test card numbers and their outcomes: 
+    <br/><br/>
+    <strong>4242 4242 4242 4242</strong> (Visa) - Successful payment<br/>
+    <strong>12/30</strong> - MM/YY Format<br/>
+    <strong>CVC</strong> - ANY <br/>
+    <strong> Zip Code </strong> - ANY <br/>
+    <br/>
+    <strong>4000 0000 0000 0002</strong> (Visa) - Payment requires authentication (3D Secure)<br/>
+    <strong>4000 0000 0000 0341</strong> (Visa) - Payment fails due to insufficient funds<br/>
+    <strong>5555 5555 5555 4444</strong> (Mastercard) - Successful payment<br/>
+    <strong>3782 822463 10005</strong> (American Express) - Successful payment<br/>
+    <strong>4000 0000 0000 0069</strong> (Visa) - Expired card<br/>
+    <strong>4000 0000 0000 0127</strong> (Visa) - Invalid CVC<br/>
+   
+    <br/>
+</p>
+
         {/* Address */}
         <div>
           <label className="block text-sm font-medium text-gray-700">Address</label>
