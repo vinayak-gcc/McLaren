@@ -59,10 +59,12 @@ export default function Example() {
   
 
    return (
-      <div className="bg-white ">
+      <div className="bg-white overflow-hidden">
          
          {/* Show Confetti */}
+         <div className="overflow-hidden">
          <ShowConfetti />
+         </div>
 
          <Navbar bgColor={"bg-white border-b"}></Navbar>
 

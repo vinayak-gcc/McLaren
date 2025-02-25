@@ -66,7 +66,10 @@ export default function CheckoutPage() {
             </section>
 
             {/* CheckOut Form */}
+            <div className="mx-auto mx-2 px-0  lg:max-w-[720px]">
             <CheckOutForm/>
+            </div>
+          
 
          </main>
       </>

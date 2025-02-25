@@ -57,7 +57,7 @@ const ShowConfetti = () => {
       
     {/*Show 1st Confetti  */}
       { show1 && <Confetti
-            className="overflow-y-hidden"
+            className="overflow-hidden"
             width={width }
             height={height }
             gravity={0.2}
@@ -67,7 +67,7 @@ const ShowConfetti = () => {
 
     {/*Show 2nd Confetti  */}
       { show2 && <Confetti
-            className="overflow-y-hidden"
+            className="overflow-hidden"
             width={width }
             height={height }
             gravity={0.2}
@@ -77,7 +77,7 @@ const ShowConfetti = () => {
 
     {/*Show 3rd Confetti  */}
       { show3 && <Confetti
-            className="overflow-y-hidden"
+            className="overflow-hidden"
             width={width }
             height={height }
             gravity={0.2}
@@ -87,7 +87,7 @@ const ShowConfetti = () => {
 
     {/*Show 4th Confetti  */}
       { show4 && <Confetti
-            className="overflow-y-hidden"
+            className="overflow-hidden"
             width={width }
             height={height }
             gravity={0.2}

@@ -1,296 +1,338 @@
-import React, {useRef , useState} from 'react';
+import React, { useState } from "react";
 import { useAppSelector } from "../app/store";
 import { useNavigate } from "react-router-dom";
-import emailjs from 'emailjs-com';
+import emailjs from "@emailjs/browser";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import axios from "axios";
 
-const CheckOutForm = () => {
+// Configuration constants from .env
+const EMAILJS_SERVICE_ID = process.env.REACT_APP_EMAILJS_SERVICE_ID || "";
+const EMAILJS_TEMPLATE_ID = process.env.REACT_APP_EMAILJS_TEMPLATE_ID || "";
+const EMAILJS_PUBLIC_KEY = process.env.REACT_APP_EMAILJS_PUBLIC_KEY || "";
+const STRIPE_PUBLIC_KEY = process.env.REACT_APP_STRIPE_PUBLIC_KEY || "";
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:4000"; // Default fallback
 
-    const total = useAppSelector((state) => state.car.total);
-    const navigation = useNavigate();
-    const [showAlert, setShowAlert] = useState(false);
-   
-    const triggerAlert = () => {
-      setShowAlert(true); 
-      setTimeout(() => {
-        setShowAlert(false); 
-      }, 1600);
-    };
+// Initialize Stripe
+const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
 
-
-   //  E-Mail.js Form
-    const form = useRef<HTMLFormElement>(null);
-
-    const sendEmail = (e:any) => {
-        e.preventDefault(); 
-
-      // Service_id ,Tempate_id ,PublicKey
-        emailjs.sendForm('service_yatg313', 'template_cnie7yy', form.current!, 'M84GYwg-YCpBV47Od')
-            .then(() => {
-                console.log('Email sent successfully:');
-            }, (error) => {
-                console.log('Error Sending Email:', error.text);
-            });
-
-        e.target.reset(); 
-    };
-
-    return (
-       <>
-            {showAlert && (
-              <div>
-                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                  <div className="bg-white rounded-lg shadow-lg p-6 max-w-sm w-fit sm:w-full text-center">
-                  <h2 className="text-lg font-semibold mb-4"> 🥳Congratulations🥳</h2>
-                  <p className="text-gray-700 mb-6">Redirecting you to Order Page</p>
-                 </div>
-               </div>
-            </div>
-            )}
-
-
-            {/* Checkout form */}
-            <section
-               aria-labelledby="payment-heading"
-               className="flex-auto overflow-y-auto px-4 bg-gray-100 pb-10 sm:px-6 lg:px-8 lg:pt-0 lg:pb-10"
-            >
-
-               <div className="max-w-lg pt-4 md:pt-2 mx-auto lg:pt-12  ">
-
-                  <form className="mt-6"  ref={form} onSubmit={sendEmail} >
-
-                     {/* Actual Form */}
-                     <div className="grid grid-cols-12 gap-y-6 gap-x-4">
-                        <div className="col-span-full mt-4">
-                           <label
-                              htmlFor="email-address"
-                              className="block text-sm font-medium text-gray-700"
-                           >
-                              Email address
-                           </label>
-                           <div className="mt-1">
-                              <input
-                                 type="email"
-                                 id="email-address"
-                                 name="email-address"
-                                 autoComplete="email"
-                                 className="appearance-none block w-full px-3 py-2  rounded-md shadow-sm placeholder-gray-400 focus:outline-none
-                                  focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                              />
-                           </div>
-                        </div>
-
-                        <div className="col-span-full">
-                           <label
-                              htmlFor="name-on-card"
-                              className="block text-sm font-medium text-gray-700"
-                           >
-                              Name on card
-                           </label>
-                           <div className="mt-1">
-                              <input
-                                 type="text"
-                                 id="name-on-card"
-                                 name="name-on-card"
-                                 autoComplete="Name"
-                                 className="appearance-none block w-full px-3 py-2  rounded-md shadow-sm placeholder-gray-400 focus:outline-none
-                                  focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                              />
-                           </div>
-                        </div>
-
-                        <div className="col-span-full">
-                           <label
-                              htmlFor="card-number"
-                              className="block text-sm font-medium text-gray-700"
-                           >
-                              Card number
-                           </label>
-                           <div className="mt-1">
-                              <input
-                                 type="text"
-                                 id="card-number"
-                                 name="card-number"
-                                 autoComplete="cc-number"
-                                 className="appearance-none block w-full px-3 py-2  rounded-md shadow-sm placeholder-gray-400 focus:outline-none
-                                  focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                              />
-                           </div>
-                        </div>
-
-                        <div className="col-span-8 sm:col-span-9">
-                           <label
-                              htmlFor="expiration-date"
-                              className="block text-sm font-medium text-gray-700"
-                           >
-                              Expiration date (MM/YY)
-                           </label>
-                           <div className="mt-1">
-                              <input
-                                 type="text"
-                                 name="expiration-date"
-                                 id="expiration-date"
-                                 autoComplete="cc-exp"
-                                 className="appearance-none block w-full px-3 py-2  rounded-md shadow-sm placeholder-gray-400 focus:outline-none
-                                  focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                              />
-                           </div>
-                        </div>
-
-                        <div className="col-span-4 sm:col-span-3">
-                           <label
-                              htmlFor="cvc"
-                              className="block text-sm font-medium text-gray-700"
-                              placeholder="000"
-                           >
-                              CVC
-                           </label>
-                           <div className="mt-1">
-                              <input
-                                 type="text"
-                                 name="cvc"
-                                 id="cvc"
-                                 autoComplete="cc-csc"
-                                 className="appearance-none block w-full px-3 py-2  rounded-md shadow-sm placeholder-gray-400 focus:outline-none
-                                  focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                              />
-                           </div>
-                        </div>
-
-                        <div className="col-span-full">
-                           <label
-                              htmlFor="address"
-                              className="block text-sm font-medium text-gray-700"
-                           >
-                              Address
-                           </label>
-                           <div className="mt-1">
-                              <input
-                                 type="text"
-                                 id="address"
-                                 name="address"
-                                 autoComplete="street-address"
-                                 className="appearance-none block w-full px-3 py-2  rounded-md shadow-sm placeholder-gray-400 focus:outline-none
-                                  focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                              />
-                           </div>
-                        </div>
-
-                        <div className="col-span-full sm:col-span-4">
-                           <label
-                              htmlFor="city"
-                              className="block text-sm font-medium text-gray-700"
-                           >
-                              City
-                           </label>
-                           <div className="mt-1">
-                              <input
-                                 type="text"
-                                 id="city"
-                                 name="city"
-                                 autoComplete="address-level2"
-                                 className="appearance-none block w-full px-3 py-2  rounded-md shadow-sm placeholder-gray-400 focus:outline-none
-                                  focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                              />
-                           </div>
-                        </div>
-
-                        <div className="col-span-full sm:col-span-4">
-                           <label
-                              htmlFor="region"
-                              className="block text-sm font-medium text-gray-700"
-                           >
-                              State / Province
-                           </label>
-                           <div className="mt-1">
-                              <input
-                                 type="text"
-                                 id="region"
-                                 name="region"
-                                 autoComplete="address-level1"
-                                 className="appearance-none block w-full px-3 py-2  rounded-md shadow-sm placeholder-gray-400 focus:outline-none
-                                  focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                              />
-                           </div>
-                        </div>
-
-                        <div className="col-span-full sm:col-span-4">
-                           <label
-                              htmlFor="postal-code"
-                              className="block text-sm font-medium text-gray-700"
-                           >
-                              Postal code
-                           </label>
-                           <div className="mt-1">
-                              <input
-                                 type="text"
-                                 id="postal-code"
-                                 name="postal-code"
-                                 autoComplete="postal-code"
-                                 className="appearance-none block w-full px-3 py-2  rounded-md shadow-sm placeholder-gray-400 focus:outline-none
-                                  focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                              />
-                           </div>
-                        </div>
-                     </div>
-
-                     <div className="mt-6 flex space-x-2">
-                        <div className="flex items-center h-5">
-                           <input
-                              id="same-as-shipping"
-                              name="same-as-shipping"
-                              type="checkbox"
-                              defaultChecked
-                              className="h-4 w-4 border-gray-100 rounded text-indigo-600 focus:ring-indigo-500"
-                           />
-                        </div>
-                        <label
-                           htmlFor="same-as-shipping"
-                           className="text-sm font-medium text-gray-900"
-                        >
-                           Billing address is the same as shipping address
-                        </label>
-                     </div>
-                     {/* Actual Form */}
-
-
-                     {/* Pay Button */}
-                     <button
-                     
-                        type="submit"
-                        
-                        onClick={() => {
-                        setTimeout(()=> {
-                           navigation('/order', {replace:true} );
-                        }, 2000);
-                           
-                        // Alert Trigger
-                        setTimeout(()=> {
-                           triggerAlert()
-                        }, 300);
-
-                           
-                        }}
-                         
-                        className="w-full mt-6 bg-indigo-600 border border-transparent rounded-md shadow-sm py-2 px-4 text-sm font-medium
-                         text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 group "
-                        >
-                        
-                        <p className='text-white visible group-focus-within:invisible' id='Pay-Text' >
-                        Pay ${new Intl.NumberFormat("en-IN").format(total)}
-                        </p>
-
-                        <p className='text-white place-self-center invisible group-focus-within:visible -mt-5  '>
-                           Thanks Bhai
-                        </p>
-
-                     </button>
-                     
-                  </form>
-               </div>
-            </section>
-
-    </>
-  )
+// Form data interface
+interface FormData {
+  email: string;
+  name: string;
+  address: string;
+  city: string;
+  state: string;
+  postal_code: string;
 }
 
-export default CheckOutForm
+const CheckOutForm = () => {
+  const total = useAppSelector((state) => state.car.total);
+  const navigate = useNavigate();
+  const [showAlert, setShowAlert] = useState(false);
+
+  const triggerAlert = () => {
+    setShowAlert(true);
+    setTimeout(() => setShowAlert(false), 1600);
+  };
+
+  return (
+    <Elements stripe={stripePromise}>
+      <StripePaymentForm
+        total={total}
+        navigate={navigate}
+        showAlert={showAlert}
+        triggerAlert={triggerAlert}
+      />
+    </Elements>
+  );
+};
+
+interface StripePaymentFormProps {
+  total: number;
+  navigate: (path: string, options?: { replace?: boolean }) => void;
+  showAlert: boolean;
+  triggerAlert: () => void;
+}
+
+const StripePaymentForm: React.FC<StripePaymentFormProps> = ({
+  total,
+  navigate,
+  showAlert,
+  triggerAlert,
+}) => {
+  const stripe = useStripe();
+  const elements = useElements();
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState<FormData>({
+    email: "",
+    name: "",
+    address: "",
+    city: "",
+    state: "",
+    postal_code: "",
+  });
+  const [error, setError] = useState<string | null>(null);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // Separate function to handle email sending
+  const sendEmailConfirmation = async () => {
+    try {
+      // Validate email format
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!formData.email || !emailRegex.test(formData.email)) {
+        console.error("Invalid email address:", formData.email);
+        return false;
+      }
+  
+      // Create template parameters object with names matching the template
+      const templateParams = {
+        "email-address": formData.email.trim(), // Matches {{email-address}} in template
+        "address": `${formData.address}, ${formData.city}, ${formData.state} ${formData.postal_code}`, // Matches {{address}} in template
+        "name-on-card": formData.name, // Matches {{name-on-card}} in template
+      };
+  
+      console.log("Sending email with parameters:", templateParams);
+  
+      const result = await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        templateParams,
+        EMAILJS_PUBLIC_KEY
+      );
+  
+      console.log("Email sent successfully:", result);
+      return true;
+    } catch (error) {
+      console.error("Failed to send email:", error);
+      return false;
+    }
+  };
+
+const handleSubmit = async (event: React.FormEvent) => {
+  event.preventDefault();
+  setError(null);
+
+  // Validate email field
+  if (!formData.email || formData.email.trim() === "") {
+    setError("Please provide a valid email address.");
+    return;
+  }
+
+  if (!stripe || !elements) {
+    setError("Payment system not initialized");
+    return;
+  }
+
+  const cardElement = elements.getElement(CardElement);
+  if (!cardElement) {
+    setError("Card element not found");
+    return;
+  }
+
+  setLoading(true);
+
+  try {
+    // Step 1: Create payment intent on your server
+    console.log("Creating payment intent...");
+    const response = await axios.post(`${API_URL}/create-payment-intent`, {
+      amount: Math.round(total * 100), // Convert to cents
+    });
+
+    if (!response.data || !response.data.clientSecret) {
+      throw new Error("Invalid response from payment server");
+    }
+
+    const clientSecret = response.data.clientSecret;
+    console.log("Created payment intent with client secret");
+
+    // Step 2: Confirm card payment
+    console.log("Confirming card payment...");
+    const result = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: cardElement,
+        billing_details: {
+          name: formData.name,
+          email: formData.email,
+          address: {
+            line1: formData.address,
+            city: formData.city,
+            state: formData.state,
+            postal_code: formData.postal_code,
+          },
+        },
+      },
+    });
+
+    if (result.error) {
+      throw new Error(result.error.message || "Payment failed");
+    }
+
+    // Payment successful
+    console.log("Payment successful:", result.paymentIntent?.id);
+
+    // Step 3: Send confirmation email
+    console.log("Sending confirmation email...");
+    const emailSent = await sendEmailConfirmation();
+
+    if (emailSent) {
+      console.log("Email confirmation sent successfully");
+    } else {
+      console.warn("Payment successful but email failed to send");
+    }
+
+    // Show success alert and redirect
+    triggerAlert();
+    setTimeout(() => {
+      navigate("/order", { replace: true });
+    }, 2000);
+  } catch (err) {
+    console.error("Payment error:", err);
+    setError(err instanceof Error ? err.message : "Payment processing failed");
+  } finally {
+    setLoading(false);
+  }
+};
+
+  return (
+    <div className="mx-auto p-6 mt-28 mx-10 lg:mx-0 mb-10 border border-black bg-white shadow-lg rounded-lg">
+      {showAlert && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div
+            className="bg-green-100 border border-green-400 text-green-700 px-6 py-4 rounded relative shadow-lg"
+            role="dialog"
+          >
+            🎉 Payment Successful! Redirecting to Order Page...
+          </div>
+        </div>
+      )}
+
+      {error && (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+          ❌ Error: {error}
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit} className="space-y-4">
+        {/* Email Address */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Email address</label>
+          <input
+          title="email"
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
+            required
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          />
+        </div>
+
+        {/* Name on Card */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Name on card</label>
+          <input
+          title="name"
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleInputChange}
+            required
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          />
+        </div>
+
+        {/* Card Element */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Card details</label>
+          <CardElement
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            options={{
+              style: {
+                base: {
+                  fontSize: "16px",
+                  color: "#424770",
+                  "::placeholder": { color: "#aab7c4" },
+                },
+                invalid: {
+                  color: "#9e2146",
+                },
+              },
+            }}
+          />
+        </div>
+
+        {/* Address */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Address</label>
+          <input
+          title="Address"
+            type="text"
+            name="address"
+            value={formData.address}
+            onChange={handleInputChange}
+            required
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          />
+        </div>
+
+        {/* City and State */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700">City</label>
+            <input
+            title="City"
+              type="text"
+              name="city"
+              value={formData.city}
+              onChange={handleInputChange}
+              required
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">State / Province</label>
+            <input
+            title="State/Province"
+              type="text"
+              name="state"
+              value={formData.state}
+              onChange={handleInputChange}
+              required
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            />
+          </div>
+        </div>
+
+        {/* Postal Code */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Postal code</label>
+          <input
+          title="Postal Code"
+            type="text"
+            name="postal_code"
+            value={formData.postal_code}
+            onChange={handleInputChange}
+            required
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          />
+        </div>
+
+        {/* Pay Button */}
+        <button
+          type="submit"
+          disabled={!stripe || loading}
+          className="w-full mt-6 bg-indigo-600 border border-transparent rounded-md shadow-sm py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+        >
+          {loading ? "Processing..." : `Pay $${total.toFixed(2)}`}
+        </button>
+      </form>
+    </div>
+  );
+};
+
+export default CheckOutForm;

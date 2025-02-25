@@ -30,7 +30,7 @@ function Navbar(props: NavbarInterface) {
    useEffect(() => {
      const handleScroll = () => {
        const scrollPosition = window.scrollY;
-       const newOpacity = Math.max(0, 1 - scrollPosition / 600); 
+       const newOpacity = Math.max(0, 1 - scrollPosition / 100); 
        setOpacity(newOpacity);
      };
  
