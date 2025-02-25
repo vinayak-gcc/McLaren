@@ -33,6 +33,7 @@
     "react-scripts": "5.0.0",
     "react-use": "^17.3.2",
     "redux-persist": "^6.0.0",
+    "stripe": "^17.7.0",
     "styled-components": "^5.3.3"
   },
   "scripts": {

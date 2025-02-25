@@ -11,7 +11,6 @@ const EMAILJS_SERVICE_ID = process.env.REACT_APP_EMAILJS_SERVICE_ID || "";
 const EMAILJS_TEMPLATE_ID = process.env.REACT_APP_EMAILJS_TEMPLATE_ID || "";
 const EMAILJS_PUBLIC_KEY = process.env.REACT_APP_EMAILJS_PUBLIC_KEY || "";
 const STRIPE_PUBLIC_KEY = process.env.REACT_APP_STRIPE_PUBLIC_KEY || "";
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:4000"; // Default fallback
 
 // Initialize Stripe
 const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
@@ -113,90 +112,90 @@ const StripePaymentForm: React.FC<StripePaymentFormProps> = ({
     }
   };
 
-const handleSubmit = async (event: React.FormEvent) => {
-  event.preventDefault();
-  setError(null);
-
-  // Validate email field
-  if (!formData.email || formData.email.trim() === "") {
-    setError("Please provide a valid email address.");
-    return;
-  }
-
-  if (!stripe || !elements) {
-    setError("Payment system not initialized");
-    return;
-  }
-
-  const cardElement = elements.getElement(CardElement);
-  if (!cardElement) {
-    setError("Card element not found");
-    return;
-  }
-
-  setLoading(true);
-
-  try {
-    // Step 1: Create payment intent on your server
-    console.log("Creating payment intent...");
-    const response = await axios.post(`${API_URL}/create-payment-intent`, {
-      amount: Math.round(total * 100), // Convert to cents
-    });
-
-    if (!response.data || !response.data.clientSecret) {
-      throw new Error("Invalid response from payment server");
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    setError(null);
+  
+    // Validate email field
+    if (!formData.email || formData.email.trim() === "") {
+      setError("Please provide a valid email address.");
+      return;
     }
-
-    const clientSecret = response.data.clientSecret;
-    console.log("Created payment intent with client secret");
-
-    // Step 2: Confirm card payment
-    console.log("Confirming card payment...");
-    const result = await stripe.confirmCardPayment(clientSecret, {
-      payment_method: {
-        card: cardElement,
-        billing_details: {
-          name: formData.name,
-          email: formData.email,
-          address: {
-            line1: formData.address,
-            city: formData.city,
-            state: formData.state,
-            postal_code: formData.postal_code,
+  
+    if (!stripe || !elements) {
+      setError("Payment system not initialized");
+      return;
+    }
+  
+    const cardElement = elements.getElement(CardElement);
+    if (!cardElement) {
+      setError("Card element not found");
+      return;
+    }
+  
+    setLoading(true);
+  
+    try {
+      // Step 1: Create payment intent on your server
+      console.log("Creating payment intent...");
+      const response = await axios.post('/api/create-payment-intent', {
+        amount: Math.round(total * 100), // Convert to cents
+      });
+  
+      if (!response.data || !response.data.clientSecret) {
+        throw new Error("Invalid response from payment server");
+      }
+  
+      const clientSecret = response.data.clientSecret;
+      console.log("Created payment intent with client secret");
+  
+      // Step 2: Confirm card payment
+      console.log("Confirming card payment...");
+      const result = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: cardElement,
+          billing_details: {
+            name: formData.name,
+            email: formData.email,
+            address: {
+              line1: formData.address,
+              city: formData.city,
+              state: formData.state,
+              postal_code: formData.postal_code,
+            },
           },
         },
-      },
-    });
-
-    if (result.error) {
-      throw new Error(result.error.message || "Payment failed");
+      });
+  
+      if (result.error) {
+        throw new Error(result.error.message || "Payment failed");
+      }
+  
+      // Payment successful
+      console.log("Payment successful:", result.paymentIntent?.id);
+  
+      // Step 3: Send confirmation email
+      console.log("Sending confirmation email...");
+      const emailSent = await sendEmailConfirmation();
+  
+      if (emailSent) {
+        console.log("Email confirmation sent successfully");
+      } else {
+        console.warn("Payment successful but email failed to send");
+      }
+  
+      // Show success alert and redirect
+      triggerAlert();
+      setTimeout(() => {
+        navigate("/order", { replace: true });
+      }, 2000);
+    } catch (err) {
+      console.error("Payment error:", err);
+      setError(err instanceof Error ? err.message : "Payment processing failed");
+    } finally {
+      setLoading(false);
     }
-
-    // Payment successful
-    console.log("Payment successful:", result.paymentIntent?.id);
-
-    // Step 3: Send confirmation email
-    console.log("Sending confirmation email...");
-    const emailSent = await sendEmailConfirmation();
-
-    if (emailSent) {
-      console.log("Email confirmation sent successfully");
-    } else {
-      console.warn("Payment successful but email failed to send");
-    }
-
-    // Show success alert and redirect
-    triggerAlert();
-    setTimeout(() => {
-      navigate("/order", { replace: true });
-    }, 2000);
-  } catch (err) {
-    console.error("Payment error:", err);
-    setError(err instanceof Error ? err.message : "Payment processing failed");
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   return (
     <div className="mx-auto p-6 mt-28 mx-10 lg:mx-0 mb-10 border border-black bg-white shadow-lg rounded-lg">
