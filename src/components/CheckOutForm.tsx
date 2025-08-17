@@ -143,7 +143,7 @@ const StripePaymentForm: React.FC<StripePaymentFormProps> = ({
 
     const response = await axios.post(
       isNotLocal 
-        ? "/stripe"
+        ? "/api/stripe"
         : "http://localhost:5000/stripe",
       {
         amount: Math.round(total * 100),
