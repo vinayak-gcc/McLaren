@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, ReactNode } from "react";
 import styled from "styled-components";
-import { Fade } from "react-awesome-reveal";
+import { Fade, FadeProps } from "react-awesome-reveal";
 import { setCarRef } from "../features/Car/carSlice";
 import { Link } from "react-router-dom";
 import { useAppDispatch } from "../app/store";
@@ -13,6 +13,14 @@ interface SectionInterface {
    homeRef: React.RefObject<HTMLDivElement>;
 }
 
+interface FadeWrapperProps extends FadeProps {
+   children: ReactNode;
+ }
+ 
+ const FadeWrapper = ({ children, ...props }: FadeWrapperProps) => (
+   <Fade {...props}>{children}</Fade>
+ );
+
 function Section(props: SectionInterface) {
    let myRef = useRef<HTMLDivElement>(null);
    const dispatch = useAppDispatch();
@@ -24,28 +32,28 @@ function Section(props: SectionInterface) {
    }, [dispatch, props.id]);
 
    return (
-      <Wrap ref={myRef} bgImage={props.backgroundImg}>
-         <Fade direction="up">
+      <Wrap ref={myRef} as="div" bgImage={props.backgroundImg}>
+         <FadeWrapper>
             <ItemSet>
                <h1 className="text-4xl font-bold text-black">{props.title}</h1>
                <p className="font-lg text-black font-medium">{props.heading}</p>
             </ItemSet>
-         </Fade>
+         </FadeWrapper>
          <Buttons>
-            <Fade direction="up">
+            <FadeWrapper>
                <ButtonGroup>
                   <Link to={`/cars/${props.id}`}>
-                     <LeftButton className=" hover:animate-bounce ">
+                     <LeftButton as="div" className=" hover:animate-bounce ">
                         <p className="text-white">Order</p>
                      </LeftButton>
                   </Link>
                   <Link to="/cart">
-                     <RightButton className="hover:animate-bounce flex basis-0">
+                     <RightButton as="div" className="hover:animate-bounce flex basis-0">
                         <p className="font-semibold">Inventory</p>
                      </RightButton>
                   </Link>
                </ButtonGroup>
-            </Fade>
+            </FadeWrapper>
 
          </Buttons>
       </Wrap>

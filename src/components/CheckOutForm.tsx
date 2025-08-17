@@ -136,11 +136,19 @@ const StripePaymentForm: React.FC<StripePaymentFormProps> = ({
     setLoading(true);
   
     try {
-      // Step 1: Create payment intent on your server
-      console.log("Creating payment intent...");
-      const response = await axios.post('/api/create-payment-intent', {
-        amount: Math.round(total * 100), // Convert to cents
-      });
+    // In development, it calls your local Express server.
+    // In production (Vercel), it calls it like the default Next.js Structure - serverless API /api/stripe.
+
+    const isNotLocal = !window.location.hostname.includes('localhost');
+
+    const response = await axios.post(
+      isNotLocal 
+        ? "/api/stripe"
+        : "http://localhost:5000/stripe",
+      {
+        amount: Math.round(total * 100),
+      }
+    );
   
       if (!response.data || !response.data.clientSecret) {
         throw new Error("Invalid response from payment server");

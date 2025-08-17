@@ -42,11 +42,11 @@ function Navbar(props: NavbarInterface) {
    }, []);
 
    return (
-      <Container className={bgColor ? bgColor : ""} style={{ opacity }}>
+      <Container as="div" className={bgColor ? bgColor : ""} style={{ opacity }}>
          <Link to="/">
             <img src="/images/McLarenlogo.svg" height={120} width={120} alt="logo" className="" />
          </Link>
-         <Menu className="flex gap-2">
+         <Menu as="div" className="flex gap-2">
             {cars.map((car) => (
                <h1
                   className="text-black bg-transparent rounded-lg px-2.5 py-1.5 hover:bg-gray-800 cursor-pointer 
@@ -110,7 +110,7 @@ function Navbar(props: NavbarInterface) {
             />
          </RightMenu>
 
-         <BurgerNav show={burgerStatus}>
+         <BurgerNav as="div" show={burgerStatus}>
             <CloseWrapper>
                <CustomClose
                   className="h-6 w-6"

@@ -12,8 +12,8 @@ function Home(props: HomeInterface) {
    const cars = useSelector(selectCars);
 
    return (
-      <Container ref={homeRef}>
-         {cars.map((car) => (
+      <Container as="div" ref={homeRef}>
+         {cars.map((car: { id: number ; heading: string; title: string; backgroundImg: string; }) => (
             <Section
                homeRef={homeRef}
                key={car.id}
